@@ -1,18 +1,19 @@
 const net = require("net");
-
+const { IP, PORT } = require("./constants");
 
 const connect = function() {
   const conn = net.createConnection({
-    host: '192.168.2.59',
-    port: 50541,
+    host: IP,
+    port: PORT,
   });
 
-  // interpret incoming data as text
   conn.setEncoding("utf8");
 
   conn.on("connect", () => {
     console.log("Successsfully connected to game server");
-    conn.write("Name: NPT");
+    const args = process.argv;
+    conn.write(`Name: ${args[2]}`);
+    // Code for if I wanted auto movement:
     // conn.write("Move: up");
     // setInterval(() => {
     //   conn.write("Move: up");

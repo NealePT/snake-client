@@ -1,8 +1,8 @@
 const { connect } = require("./client");
+const { keyPress } = require("./constants");
 
-let connection;
+
 const setupInput = (conn) => {
-  connection = conn;
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding("utf8");
@@ -12,26 +12,8 @@ const setupInput = (conn) => {
     if (key === '\u0003') {
       process.exit();
     }
-    if (key === 'w') {
-      conn.write("Move: up");
-    }
-    if (key === 'a') {
-      conn.write("Move: left");
-    }
-    if (key === 's') {
-      conn.write("Move: down");
-    }
-    if (key === 'd') {
-      conn.write("Move: right");
-    }
-    if (key === 'g') {
-      conn.write("Say: Good luck!");
-    }
-    if (key === 'h') {
-      conn.write("Say: Have fun!");
-    }
-    if (key === 'j') {
-      conn.write("Say: Out of my way!");
+    if (keyPress[key]) {
+      conn.write(keyPress[key]);
     }
   };
   stdin.on("data", handleUserInput);
